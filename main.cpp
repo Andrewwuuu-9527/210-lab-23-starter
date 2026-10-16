@@ -71,3 +71,25 @@ int main_menu() {
     return choice;
 }
 
+// add_goat() randomly generates a goat and adds it to the trip
+void add_goat(list<Goat>& trip, string names[], string colors[]) {
+    string n = names[rand() % SZ_NAMES];
+    int a = rand() % (MAX_AGE + 1);
+    string c = colors[rand() % SZ_COLORS];
+    trip.push_back(Goat(n, a, c));
+    cout << "Added: " << n << " (" << a << ", " << c << ")\n";
+}
+
+// display_trip() shows all goats with numbering
+void display_trip(list<Goat> trip) {
+    if (trip.empty()) {
+        cout << "No goats in the trip.\n";
+        return;
+    }
+    int count = 1;
+    for (auto it = trip.begin(); it != trip.end(); ++it) {
+        cout << "[" << count++ << "] " << it->get_name()
+             << " (" << it->get_age() << ", "
+             << it->get_color() << ")\n";
+    }
+}
