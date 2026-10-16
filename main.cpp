@@ -93,3 +93,37 @@ void display_trip(list<Goat> trip) {
              << it->get_color() << ")\n";
     }
 }
+
+// select_goat() shows submenu and returns user's 1-based choice
+int select_goat(list<Goat>& trip) {
+    if (trip.empty()) {
+        cout << "No goats to select.\n";
+        return -1;
+    }
+    display_trip(trip);
+    int choice;
+    bool valid = false;
+    while (!valid) {
+        cout << "Select a goat: ";
+        cin >> choice;
+        if (cin.fail() || choice < 1 || choice > (int)trip.size()) {
+            cin.clear();
+            cin.ignore(10000, '\n');
+            cout << "Invalid. Enter 1-" << trip.size() << ".\n";
+        } else {
+            valid = true;
+        }
+    }
+    return choice;
+}
+
+// delete_goat() selects and removes a goat by position
+void delete_goat(list<Goat>& trip) {
+    int choice = select_goat(trip);
+    if (choice == -1) return;
+
+    auto it = trip.begin();
+    advance(it, choice - 1);
+    cout << "Removed: " << it->get_name() << "\n";
+    trip.erase(it);
+}
